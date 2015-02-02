@@ -17,13 +17,13 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "1.0.7",
+    "angular": "1.2.16",
     "jassa": "~0.0.2-SNAPSHOT",
     "jquery": "1.9.1",
     "jquery-cookie": "~1.4.1",
     "intro.js": "~0.8.0",
     "underscore": "~1.6.0",
-    "underscore.string": "~2.3.3",
+    "underscore.string": "~2.3.2",
     "leaflet-dist": "~0.7.2",
     "jassa-ui-angular": "~0.0.1-SNAPSHOT",
     "angular-ui-bootstrap-bower": "~0.11.0",
@@ -31,12 +31,13 @@
     "angular-sanitize": "~1.2.16"
   },
   "devDependencies": {
+    "angular":  "1.2.16",
     "jassa": "~0.0.2-SNAPSHOT",
     "jquery": "1.9.1",
     "jquery-cookie": "~1.4.1",
     "intro.js": "~0.8.0",
     "underscore": "~1.6.0",
-    "underscore.string": "~2.3.3",
+    "underscore.string": "~2.3.2",
     "leaflet-dist": "~0.7.2",
     "jassa-ui-angular": "~0.0.1-SNAPSHOT",
     "angular-ui-bootstrap-bower": "~0.11.0",

@@ -23,6 +23,12 @@ module.exports = function (grunt) {
             cwd:    'src',
             src:    'img/*',
             dest:   'dist/'
+          },
+          html: {
+            expand: true,
+            cwd:    'src',
+            src:    'index.html',
+            dest:   'dist/'
           }
         },
         concat: {
@@ -126,12 +132,100 @@ module.exports = function (grunt) {
         watch: {
           files: ['src/*', 'src/*/*'],
           tasks: ['buildSrc']
+        },
+        
+        
+    wiredep: {
+      app: {
+        src: ['src/index.html'],
+        ignorePath:  /\.\.\//
+      }
+    },
+    
+    useminPrepare: {
+      html: 'src/index.html'
+    },
+
+    usemin: {
+      html: ['dist/index.html']
+    },
+    
+       // The actual grunt server settings
+    connect: {
+      options: {
+        port: 9005,
+        // Change this to '0.0.0.0' to access the server from outside.
+        hostname: 'localhost',
+        livereload: 35729
+      },
+      livereload: {
+        options: {
+          open: true,
+          middleware: function (connect) {
+            return [
+              connect.static('.tmp'),
+              connect().use(
+                '/bower_components',
+                connect.static('./bower_components')
+              ),
+              connect.static("src")
+            ];
+          }
         }
+      },
+      test: {
+        options: {
+          port: 9001,
+          middleware: function (connect) {
+            return [
+              connect.static('.tmp'),
+              connect.static('test'),
+              connect().use(
+                '/bower_components',
+                connect.static('./bower_components')
+              ),
+              connect.static("src")
+            ];
+          }
+        }
+      },
+      dist: {
+        options: {
+          open: true,
+          base: 'dist'
+        }
+      }
+    },
+        
+        
     });
+    
+  grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
+    if (target === 'dist') {
+      return grunt.task.run(['build','connect:dist:keepalive']);
+    }
+
+    grunt.task.run([
+      'connect:livereload'
+    ]);
+  });
     
     grunt.registerTask('default', ['build']);
 	grunt.registerTask('build', 
-		['clean:dist', 'copy:img', 'buildConfig', 'buildActions', 'buildSrc', 'buildCss']);
+		[
+		'clean:dist', 
+		'copy:img', 
+		'buildConfig', 
+		'buildActions', 
+		'buildSrc', 
+		'buildCss',
+		'wiredep',
+		'useminPrepare',
+		'concat:generated',
+		'uglify:generated',
+		'copy:html',
+		'usemin'
+		]);
 	
 	//grunt.registerTask('buildSass', ['concat:scss', 'sass', 'cssmin']);
 	grunt.registerTask('buildConfig', ['concat:config', 'uglify:config']);
